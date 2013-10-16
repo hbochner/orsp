@@ -126,18 +126,41 @@ public class JiraRestService {
         }
     }
 
-    public Map<String, Object> getIssue(String key)
+    public Map<String, Object> doGet(WebResource resource, String kind)
         throws IOException
     {
-        WebResource resource = getter("issue", key);
-        resource = resource.queryParam("fields", "*all");
         ClientResponse cr = setJson(resource).get(ClientResponse.class);
-        checkStatus(cr, "getIssue");
+        checkStatus(cr, kind);
 
         Gson gson = new Gson();
         Map<String, Object> data
             = gson.fromJson(cr.getEntity(String.class), mapType);
 
         return data;
+    }
+
+    public Map<String, Object> getIssue(String key)
+        throws IOException
+    {
+        WebResource resource = getter("issue", key);
+        resource = resource.queryParam("fields", "*all");
+
+        return doGet(resource, "getIssue");
+    }
+
+    public Map<String, Object> getFieldDescriptions(String project,
+                                                    String issueType)
+        throws IOException
+    {
+        WebResource resource = getter("issue/createmeta", null);
+        if (project != null) {
+            resource = resource.queryParam("projectKeys", project);
+        }
+        if (issueType != null) {
+            resource = resource.queryParam("issuetypeNames", issueType);
+        }
+        resource.queryParam("expand", "projects.issuetypes.fields");
+
+        return doGet(resource, "get field descriptions");
     }
 }
