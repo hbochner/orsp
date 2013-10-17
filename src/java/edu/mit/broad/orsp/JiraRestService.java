@@ -10,6 +10,8 @@ import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.lang.reflect.Type;
@@ -159,8 +161,28 @@ public class JiraRestService {
         if (issueType != null) {
             resource = resource.queryParam("issuetypeNames", issueType);
         }
-        resource.queryParam("expand", "projects.issuetypes.fields");
+        resource = resource.queryParam("expand", "projects.issuetypes.fields");
 
-        return doGet(resource, "get field descriptions");
+        Map<String, Object> data = doGet(resource, "get field descriptions");
+        Map<String, Object> result = new HashMap<>();
+
+        @SuppressWarnings("unchecked")
+        List<Map<String, Object>> types
+            = (List<Map<String, Object>>)
+                  Utils.getNested(data, "projects[0].issuetypes");
+        for (Map<String, Object> type: types) {
+            @SuppressWarnings("unchecked")
+            Map<String, Object> fields
+                = (Map<String, Object>) type.get("fields");
+            if (fields == null) {
+                continue;
+            }
+
+            for (Map.Entry entry: fields.entrySet()) {
+                result.put((String) entry.getKey(), entry.getValue());
+            }
+        }
+
+        return result;
     }
 }
