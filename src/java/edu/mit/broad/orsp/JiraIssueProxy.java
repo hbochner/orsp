@@ -6,10 +6,9 @@ import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
- * User: loaner
+ * User: hbochner
  * Date: 10/16/13
  * Time: 4:38 PM
- * To change this template use File | Settings | File Templates.
  */
 public class JiraIssueProxy {
     JiraRestService jira;
@@ -39,8 +38,10 @@ public class JiraIssueProxy {
             for (Map.Entry entry: data.entrySet()) {
                 @SuppressWarnings("unchecked")
                 Map<String, Object> map = (Map<String, Object>) entry.getValue();
+                // store the fieldId in the structure for our convenience
+                map.put("fieldId", entry.getKey());
                 String name = (String) map.get("name");
-                fields.put(name, map);
+                fields.put(name.toLowerCase(), map);
                 ids.put(name, (String) entry.getKey());
             }
             fieldByName = fields;
@@ -57,6 +58,13 @@ public class JiraIssueProxy {
             Map<String, Object> map = (Map<String, Object>) data.get("fields");
             theIssue = map;
         }
+    }
+
+    public Map<String, Object> getFieldMetaData(String name)
+        throws IOException
+    {
+        initFields();
+        return fieldByName.get(name);
     }
 
     public String getKey() {
@@ -90,7 +98,7 @@ public class JiraIssueProxy {
         return  theIssue.get(id);
     }
 
-    private Object getObjectById(String id, String property)
+    public Object getObject(String id, String property)
         throws IOException
     {
         Object obj = getObjectById(id);
@@ -107,11 +115,5 @@ public class JiraIssueProxy {
         }
 
         return obj;
-    }
-
-    public Object getObject(String name, String property)
-        throws IOException
-    {
-        return getObjectById(getFieldId(name), property);
     }
 }
