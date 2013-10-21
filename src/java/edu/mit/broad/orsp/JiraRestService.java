@@ -21,10 +21,9 @@ import com.google.gson.reflect.*;
 
 /**
  * Created with IntelliJ IDEA.
- * User: loaner
+ * User: hbochner
  * Date: 10/16/13
  * Time: 12:44 PM
- * To change this template use File | Settings | File Templates.
  */
 public class JiraRestService {
     private String jiraUrl;
@@ -38,14 +37,13 @@ public class JiraRestService {
     public JiraRestService()
         throws IOException
     {
-        readProperties("file:/Users/loaner/lib/jira.properties");
+        readProperties("jira.properties");
     }
 
     private void readProperties(String fileName)
         throws IOException
     {
-        // will later find the properties in the jar file
-        URL url = new URL(fileName);
+        URL url = this.getClass().getResource(fileName);
         InputStream in = url.openStream();
         if (in == null) {
             throw new IOException("can't find properties file '"
