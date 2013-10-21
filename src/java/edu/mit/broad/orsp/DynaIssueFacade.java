@@ -79,7 +79,12 @@ public class DynaIssueFacade {
             throw new IOException("unrecognized field name '" + name + "'");
         }
 
-        Object value = proxy.getObject(desc.id, prop);
+        Object value;
+        if (desc.isMulti) {
+            value = proxy.getMulti(desc.id, prop);
+        } else {
+            value = proxy.getObject(desc.id, prop);
+        }
 
         return value;
     }
