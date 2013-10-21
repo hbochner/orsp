@@ -1,7 +1,9 @@
 package edu.mit.broad.orsp;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -75,18 +77,6 @@ public class JiraIssueProxy {
         this.key = key;
     }
 
-    public String getFieldId(String name)
-        throws IOException
-    {
-        initFields();
-        String id = idByName.get(name);
-        if (id == null) {
-            throw new IOException("unrecognized field '" + name + "'");
-        }
-
-        return id;
-    }
-
     private Object getObjectById(String id)
         throws IOException
     {
@@ -115,5 +105,40 @@ public class JiraIssueProxy {
         }
 
         return obj;
+    }
+
+    static public Map<String, Object> mapContainer(String key, Object value) {
+        Map<String, Object> map = new HashMap<>(1);
+        map.put(key, value);
+
+        return map;
+    }
+
+    public List<Object> getMulti(String id, String property)
+        throws IOException
+    {
+        Object obj = getObjectById(id);
+        if (obj == null) {
+            return null;
+        }
+
+        if (! (obj instanceof List)) {
+            throw new IOException("non-list for multi value");
+        }
+
+        @SuppressWarnings("unchecked")
+        List<Object> val = (List<Object>) obj;
+
+        if (property != null) {
+            @SuppressWarnings("unchecked")
+            List<Map<String, Object>> maps = (List<Map<String, Object>>) obj;
+            List<Object> tmp = new ArrayList<>(val.size());
+            for (Map<String, Object> item: maps) {
+                tmp.add(mapContainer(property, item.get(property)));
+            }
+            val = tmp;
+        }
+
+        return val;
     }
 }

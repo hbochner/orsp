@@ -48,9 +48,12 @@ public class DynaIssueFacade {
                 if ("issuetype".equals(kind)) {
                     typeByKey.put(name, value);
                 } else if ("field".equals(kind)) {
-                    Map<String, Object> meta = proxy.getFieldMetaData(name);
+                    Map<String, Object> meta = proxy.getFieldMetaData(value.toLowerCase());
+                    if (meta == null) {
+                        throw new IOException("unrecognized field '" + value + "'");
+                    }
                     FieldDescription desc = new FieldDescription(meta);
-                    flds.put(value.toLowerCase(), desc);
+                    flds.put(name, desc);
                 } else {
                     // log a warning
                 }
@@ -68,7 +71,7 @@ public class DynaIssueFacade {
         int inx = name.indexOf("-");
         if (inx > 0) {
             prop = name.substring(inx + 1);
-            name = name.substring(inx);
+            name = name.substring(0, inx);
         }
         FieldDescription desc = fields.get(name);
         if (desc == null) {
@@ -81,6 +84,10 @@ public class DynaIssueFacade {
         return value;
     }
 
+    public Map<String, FieldDescription> getDesc() {
+        return fields;
+    }
+
     class FieldDescription {
         // jira fieldid
         String id;
@@ -91,7 +98,10 @@ public class DynaIssueFacade {
         public FieldDescription(Map<String, Object> meta) {
             this.id = (String) meta.get("fieldId");
             this.meta = meta;
-            // To DO: initialize isMulti and options
+            isMulti = "array".equals(Utils.getNested(meta, "schema.type"));
+            @SuppressWarnings("unchecked")
+            List<Map<String, Object>> tmp = (List<Map<String, Object>>) meta.get("allowedValues");
+            options = tmp;
         }
 
         String getId() {
