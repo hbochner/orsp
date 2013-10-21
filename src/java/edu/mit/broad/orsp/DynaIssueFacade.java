@@ -93,6 +93,40 @@ public class DynaIssueFacade {
         return fields;
     }
 
+    public void setFields(Map<String, Object> input)
+            throws Exception
+    {
+        init();
+
+        for (String name : input.keySet()) {
+            Object obj = input.get(name);
+
+            String prop = null;
+            int inx = name.indexOf("-");
+            if (inx > 0) {
+                prop = name.substring(inx + 1);
+                name = name.substring(0, inx);
+            }
+
+            FieldDescription desc = fields.get(name);
+            if (desc == null) {
+                // web forms routinely submit items that aren't fields,
+                // so don't even log this
+                continue;
+            }
+
+            if (desc.isMulti) {
+                if (obj instanceof String) {
+                    obj = new String[]{(String) obj};
+                }
+                String[] value = (String[]) obj;
+                proxy.setMulti(name, value, prop);
+            } else {
+                proxy.setObject(name, obj, prop);
+            }
+        }
+    }
+
     class FieldDescription {
         // jira fieldid
         String id;

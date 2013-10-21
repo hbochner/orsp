@@ -1,10 +1,7 @@
 package edu.mit.broad.orsp;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -148,7 +145,7 @@ public class JiraIssueProxy {
             changes = new HashMap<>();
         }
 
-        changes.put(name,, value);
+        changes.put(name, value);
     }
 
     private static boolean singleChanged(Object a, Object b) {
@@ -166,7 +163,34 @@ public class JiraIssueProxy {
     {
         Object old = getObject(name, property);
         if (singleChanged(old, value)) {
+            if (property != null) {
+                value = mapContainer(property, value);
+            }
             noteChange(name, value);
         }
+    }
+
+    public void setMulti(String name, String[] values, String key)
+            throws IOException
+    {
+        List<Object> tmp = getMulti(name, key);
+        if (tmp != null) {
+            Set<Object> old = new HashSet<>(tmp);
+            Set<String> val = new HashSet<>(Arrays.asList(values));
+            if (old.equals(val)) {
+                return;
+            }
+        }
+
+        List<Object> list = new ArrayList<>(values.length);
+        for (String value : values) {
+            Object obj = value;
+            if (key != null) {
+                obj = mapContainer(key, value);
+            }
+            list.add(obj);
+        }
+
+        noteChange(name, list);
     }
 }
