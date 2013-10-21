@@ -105,13 +105,6 @@ public class JiraIssueProxy {
         return obj;
     }
 
-    static public Map<String, Object> mapContainer(String key, Object value) {
-        Map<String, Object> map = new HashMap<>(1);
-        map.put(key, value);
-
-        return map;
-    }
-
     public List<Object> getMulti(String id, String property)
         throws IOException
     {
@@ -132,7 +125,7 @@ public class JiraIssueProxy {
             List<Map<String, Object>> maps = (List<Map<String, Object>>) obj;
             List<Object> tmp = new ArrayList<>(val.size());
             for (Map<String, Object> item: maps) {
-                tmp.add(mapContainer(property, item.get(property)));
+                tmp.add(Utils.mapContainer(property, item.get(property)));
             }
             val = tmp;
         }
@@ -150,12 +143,12 @@ public class JiraIssueProxy {
 
     private static boolean singleChanged(Object a, Object b) {
         if (a != null) {
-            return a.equals(b);
+            return ! a.equals(b);
         }
         if (b != null) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     public void setObject(String name, Object value, String property)
@@ -164,7 +157,7 @@ public class JiraIssueProxy {
         Object old = getObject(name, property);
         if (singleChanged(old, value)) {
             if (property != null) {
-                value = mapContainer(property, value);
+                value = Utils.mapContainer(property, value);
             }
             noteChange(name, value);
         }
@@ -186,11 +179,19 @@ public class JiraIssueProxy {
         for (String value : values) {
             Object obj = value;
             if (key != null) {
-                obj = mapContainer(key, value);
+                obj = Utils.mapContainer(key, value);
             }
             list.add(obj);
         }
 
         noteChange(name, list);
+    }
+
+    public void update()
+            throws IOException
+    {
+        if (changes != null) {
+            jira.updateIssue(key, changes);
+        }
     }
 }

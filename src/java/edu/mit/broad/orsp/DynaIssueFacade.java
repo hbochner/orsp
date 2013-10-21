@@ -127,6 +127,12 @@ public class DynaIssueFacade {
         }
     }
 
+    public void update()
+            throws IOException
+    {
+        proxy.update();
+    }
+
     class FieldDescription {
         // jira fieldid
         String id;

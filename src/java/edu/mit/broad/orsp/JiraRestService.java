@@ -183,4 +183,20 @@ public class JiraRestService {
 
         return result;
     }
+
+    public void doPut(String method, String key, Object data, String kind)
+            throws IOException
+    {
+        Gson gson = new Gson();
+        String json = gson.toJson(data);
+        ClientResponse cr = putOrPoster(method, key).put(ClientResponse.class, json);
+        checkStatus(cr, kind);
+    }
+
+    public void updateIssue(String key, Map<String, Object> changes)
+            throws IOException
+    {
+        Map<String, Object> data = Utils.mapContainer("fields", changes);
+        doPut("issue", key, data, "update issue");
+    }
 }
