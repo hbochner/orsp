@@ -2,8 +2,8 @@ grails.servlet.version = "2.5" // Change depending on target container complianc
 grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
-grails.project.target.level = 1.6
-grails.project.source.level = 1.6
+grails.project.target.level = 1.7
+grails.project.source.level = 1.7
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
 // uncomment (and adjust settings) to fork the JVM to isolate classpaths
@@ -48,7 +48,7 @@ grails.project.dependency.resolution = {
         build 'com.sun.jersey:jersey-project:1.8'
         build 'javax.ws.rs:jsr311-api:1.0'
         build 'com.google.code.gson:gson:2.2.4'
-    }
+        }
 
     plugins {
         runtime ":hibernate:$grailsVersion"
