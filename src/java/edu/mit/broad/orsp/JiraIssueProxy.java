@@ -16,6 +16,7 @@ public class JiraIssueProxy {
     JiraRestService jira;
     String key;
     Map<String, Object> theIssue;
+    Map<String, Object> changes;
 
     static Map<String, Map<String, Object>> fieldByName;
     static Map<String, String> idByName;
@@ -140,5 +141,32 @@ public class JiraIssueProxy {
         }
 
         return val;
+    }
+
+    private void noteChange(String name, Object value) {
+        if (changes == null) {
+            changes = new HashMap<>();
+        }
+
+        changes.put(name,, value);
+    }
+
+    private static boolean singleChanged(Object a, Object b) {
+        if (a != null) {
+            return a.equals(b);
+        }
+        if (b != null) {
+            return false;
+        }
+        return true;
+    }
+
+    public void setObject(String name, Object value, String property)
+        throws IOException
+    {
+        Object old = getObject(name, property);
+        if (singleChanged(old, value)) {
+            noteChange(name, value);
+        }
     }
 }
