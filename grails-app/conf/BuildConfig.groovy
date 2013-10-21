@@ -42,6 +42,12 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
 
         // runtime 'mysql:mysql-connector-java:5.1.22'
+        build 'com.sun.jersey:jersey-client:1.6'
+        build 'com.sun.jersey:jersey-json:1.6'
+        build 'com.sun.jersey:jersey-core:1.14'
+        build 'com.sun.jersey:jersey-project:1.8'
+        build 'javax.ws.rs:jsr311-api:1.0'
+        build 'com.google.code.gson:gson:2.2.4'
     }
 
     plugins {
