@@ -34,7 +34,7 @@ public class JiraIssueProxy {
         if (fieldByName == null) {
             Map<String, Map<String, Object>> fields = new HashMap<>();
             Map<String, String> ids = new HashMap<>();
-            Map<String, Object> data = jira.getFieldDescriptions("ORSP", null);
+            Map<String, Object> data = jira.getFieldDescriptions(jira.getDefaultProject(), null);
             for (Map.Entry entry: data.entrySet()) {
                 @SuppressWarnings("unchecked")
                 Map<String, Object> map = (Map<String, Object>) entry.getValue();
@@ -193,5 +193,15 @@ public class JiraIssueProxy {
         if (changes != null) {
             jira.updateIssue(key, changes);
         }
+    }
+
+    public String add(String issueType)
+            throws IOException
+    {
+        key = jira.createIssue(jira.getDefaultProject(), issueType, changes);
+        theIssue = null;
+        changes = null;
+
+        return key;
     }
 }

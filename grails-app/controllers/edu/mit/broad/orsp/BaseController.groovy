@@ -27,4 +27,17 @@ class BaseController {
         issue.update()
         redirect([action: "show", id: params.id])
     }
+
+    def create() {
+        def issue = new DynaIssueFacade()
+        [issue: issue]
+    }
+
+    def add() {
+        def issue = new DynaIssueFacade();
+        issue.setType(getType())
+        issue.setFields(params);
+        def key  = issue.add();
+        redirect([action: "show", id: key]);
+    }
 }

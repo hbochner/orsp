@@ -18,7 +18,8 @@ public class DynaIssueFacade {
     static private Map<String, String> typeByKey = new HashMap<>();
 
     private JiraIssueProxy proxy;
-    private String key;
+    private String         key;
+    private String         type, issueType;
 
     private void init()
             throws IOException
@@ -37,7 +38,7 @@ public class DynaIssueFacade {
             properties.load(url.openStream());
 
             Map<String, FieldDescription> flds = new HashMap<>();
-            for (String pkey: properties.stringPropertyNames()) {
+            for (String pkey : properties.stringPropertyNames()) {
                 String value = properties.getProperty(pkey);
 
                 int inx = pkey.indexOf(".");
@@ -63,7 +64,7 @@ public class DynaIssueFacade {
     }
 
     public Object get(String name)
-        throws IOException
+            throws IOException
     {
         init();
 
@@ -104,6 +105,17 @@ public class DynaIssueFacade {
         }
     }
 
+    public void setType(String type)
+            throws IOException
+    {
+        init();
+
+        this.type = type;
+        issueType = typeByKey.get(type);
+        if (issueType == null) {
+            throw new Error("unrecognized issue type key '" + type + "'");
+        }
+    }
 
     public void setFields(Map<String, Object> input)
             throws Exception
@@ -145,11 +157,24 @@ public class DynaIssueFacade {
         proxy.update();
     }
 
+    public String add()
+            throws IOException
+    {
+        init();
+
+        if (issueType == null) {
+            throw new IOException("issue type has not been set");
+        }
+
+        key = proxy.add(issueType);
+        return key;
+    }
+
     class FieldDescription {
         // jira fieldid
-        String id;
-        Map<String, Object> meta;
-        boolean isMulti;
+        String                    id;
+        Map<String, Object>       meta;
+        boolean                   isMulti;
         List<Map<String, Object>> options;
 
         public FieldDescription(Map<String, Object> meta) {
