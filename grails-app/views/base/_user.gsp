@@ -1,7 +1,10 @@
 <g:if test='${issue?."$field" || doEdit}'>
     <li class="fieldcontain">
         <g:set var="vals" value='${issue."$field"}' />
-        <g:if test='${vals && ! (vals instanceof List)}'>
+        <g:if test="${! vals}">
+            <g:set var="vals" value="${[name: '']}" />
+        </g:if>
+        <g:if test='${! (vals instanceof List)}'>
             <g:set var="vals" value='${[vals]}' />
         </g:if>
         <span id="${field}-label" class="property-label">${label}</span>
