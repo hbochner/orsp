@@ -1,5 +1,5 @@
 <g:if test='${issue?."$field" || doEdit}'>
-    <li class="fieldcontain">
+    <li class="fieldcontain" id="${field}-item">
         <span id="${field}-label" class="property-label">${label}</span>
         <span class="property-value" aria-labelledby="${field}-label">
             <g:if test="${doEdit}">

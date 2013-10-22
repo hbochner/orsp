@@ -3,12 +3,18 @@
         <span id="${field}-label" class="property-label">${label}</span>
         <span class="property-value" aria-labelledby="${field}-label">
             <g:if test="${doEdit}">
-            <g:select name="$field-id"
-                      from='${issue.desc."$field".options}'
-                      optionKey="id"
-                      optionValue="value"
-                      multiple='${issue.desc."$field".isMulti}'
-                      value='${issue."$field"?.id}'/>
+                <g:set var="vals" value='${issue.desc."$field".options}' />
+                <g:select name="$field-id"
+                          from='${vals}'
+                          optionKey="id"
+                          optionValue="value"
+                          multiple='${issue.desc."$field".isMulti}'
+                          value='${issue."$field"?.id}'/>
+                <g:if test="${child}">
+                    <r:script disposition="defer">
+        orsp.selectChild("${field}", "${child}", "${vals[vals.size() - 1].id}");
+                    </r:script>
+                </g:if>
             </g:if>
             <g:elseif test='${issue.desc."$field".isMulti}'>
                 <g:set var="max" value='${issue."$field".size() - 1}' />
