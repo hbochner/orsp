@@ -7,6 +7,7 @@
                       from='${issue.desc."$field".options}'
                       optionKey="id"
                       optionValue="value"
+                      multiple='${issue.desc."$field".isMulti}'
                       value='${issue."$field"?.id}'/>
             </g:if>
             <g:elseif test='${issue.desc."$field".isMulti}'>
