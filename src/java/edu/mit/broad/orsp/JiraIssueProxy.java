@@ -167,7 +167,7 @@ public class JiraIssueProxy {
             throws IOException
     {
         List<Object> tmp = getMulti(name, key);
-        if (tmp != null) {
+        if (tmp != null && tmp.size() == values.length) {
             Set<Object> old = new HashSet<>(tmp);
             Set<String> val = new HashSet<>(Arrays.asList(values));
             if (old.equals(val)) {
