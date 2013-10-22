@@ -32,7 +32,7 @@
 <div id="edit-issue" class="content scaffold-show" role="main">
     <h1><g:message code="default.edit.label" args="[entityName]"/></h1>
     <g:form>
-        <g:hiddenField name="key" value="${issue?.key}"/>
+        <g:hiddenField name="id" value="${issue?.key}"/>
         <g:render template="irb_fields" model="${[doEdit: true]}"/>
 
         <fieldset class="buttons">
