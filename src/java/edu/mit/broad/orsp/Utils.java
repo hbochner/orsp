@@ -8,10 +8,9 @@ import java.util.regex.Pattern;
 
 /**
  * Created with IntelliJ IDEA.
- * User: loaner
+ * User: hbochner
  * Date: 10/17/13
  * Time: 12:58 PM
- * To change this template use File | Settings | File Templates.
  */
 public class Utils {
     static Pattern indexedPat = Pattern.compile("(\\w+)\\[(\\d+)]");
@@ -38,7 +37,11 @@ public class Utils {
         if (matcher.matches()) {
             @SuppressWarnings("unchecked")
             List<Object> list = (List<Object>) map.get(matcher.group(1));
-            return list.get(Integer.parseInt(matcher.group(2)));
+            int n = Integer.parseInt(matcher.group(2));
+            if (list == null || n >= list.size()) {
+                throw new Error("index out of bounds for " + name);
+            }
+            return list.get(n);
         }
 
         return map.get(name);
