@@ -18,10 +18,10 @@ public class DynaIssueFacade {
     static private Map<String, String> typeByKey = new HashMap<>();
 
     private JiraIssueProxy proxy;
-    public String key;
+    private String key;
 
     private void init()
-        throws IOException
+            throws IOException
     {
         if (proxy == null) {
             proxy = new JiraIssueProxy();
@@ -93,6 +93,18 @@ public class DynaIssueFacade {
         return fields;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+        if (proxy != null) {
+            proxy.setKey(key);
+        }
+    }
+
+
     public void setFields(Map<String, Object> input)
             throws Exception
     {
@@ -120,9 +132,9 @@ public class DynaIssueFacade {
                     obj = new String[]{(String) obj};
                 }
                 String[] value = (String[]) obj;
-                proxy.setMulti(name, value, prop);
+                proxy.setMulti(desc.id, value, prop);
             } else {
-                proxy.setObject(name, obj, prop);
+                proxy.setObject(desc.id, obj, prop);
             }
         }
     }
