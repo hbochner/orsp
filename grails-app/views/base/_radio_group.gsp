@@ -12,5 +12,8 @@
             </g:if>
             <g:else>${issue."$field-value"}</g:else>
         </span>
+        <g:if test="${doEdit && body()}">
+            <div class="property-value description">${body()}</div>
+        </g:if>
     </li>
 </g:if>
