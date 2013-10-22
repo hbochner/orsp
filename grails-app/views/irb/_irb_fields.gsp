@@ -10,9 +10,11 @@
                       child: 'fundingOther']}">
         The funding source(s) for a project reviewed by ORSP.
     </g:render>
-    <g:render template="/base/text_field" model="${[field: 'fundingOther', label: 'Other Funding']}"/>
+    <g:render template="/base/text_field" model="${[field: 'fundingOther', label: 'Other Funding']}">
+       If 'other', name of funding source.
+    </g:render>
 
-    <g:render template="/base/select"
+        <g:render template="/base/select"
               model="${[field: 'affiliation', label: 'PI Affiliation', child: 'affiliationOther']}"/>
     <g:render template="/base/text_field"
               model="${[field: 'affiliationOther', label: 'PI Other Affiliation']}"/>

@@ -4,10 +4,11 @@
     <g:render template="/base/text_field" model="${[field: 'summary', label: 'Summary']}"/>
     <g:render template="/base/user"
               model="${[field: 'respParty', label: 'Broad Responsible Party']}"/>
+    <g:render template="/base/user"
+              model="${[field: 'contact', label: 'Broad Contact']}"/>
     <g:render template="/base/text_field"
               model="${[field: 'source', label: 'Source of Samples/External Collaborator']}"/>
 
-%{--<g:render template="/base/text_field" model="${[field: 'pm-name', label: 'Project Manager']}"/>--}%
     <g:render template="/base/radio_group"
               model="${[field: 'idr', label: 'Initial Determination Request?']}"/>
     <g:render template="/base/radio_group"
