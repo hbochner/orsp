@@ -16,6 +16,7 @@ import java.util.Properties;
 public class DynaIssueFacade {
     static private Map<String, FieldDescription> fields;
     static private Map<String, String> typeByKey = new HashMap<>();
+    static private Map<String, String> typeByName = new HashMap<>();
 
     private JiraIssueProxy proxy;
     private String         key;
@@ -48,6 +49,7 @@ public class DynaIssueFacade {
 
                 if ("issuetype".equals(kind)) {
                     typeByKey.put(name, value);
+                    typeByName.put(value, name);
                 } else if ("field".equals(kind)) {
                     Map<String, Object> meta = proxy.getFieldMetaData(value.toLowerCase());
                     if (meta == null) {
@@ -197,5 +199,29 @@ public class DynaIssueFacade {
         List<Map<String, Object>> getOptions() {
             return options;
         }
+    }
+
+    public int issueCount(Map<String, Object> params)
+            throws IOException
+    {
+        init();
+        return proxy.searchCount("project = ORSP");
+    }
+
+    public List<Map<String, Object>> search(Map<String, Object> params, int max, int offset)
+            throws IOException
+    {
+        init();
+        // later translate input params to jql
+        List<Map<String, Object>> result = proxy.issueSearch("project = ORSP", max, offset);
+
+        if (result != null) {
+            for (Map<String, Object> item: result) {
+                item.put("typeKey",
+                         typeByName.get(Utils.getNested(item, "fields.issuetype.name")));
+            }
+        }
+
+        return result;
     }
 }

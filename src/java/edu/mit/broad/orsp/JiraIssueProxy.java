@@ -204,4 +204,17 @@ public class JiraIssueProxy {
 
         return key;
     }
+
+
+    public List<Map<String, Object>> issueSearch(String jql, int max, int offset)
+            throws IOException
+    {
+        return jira.issueSearch(jql, max, offset);
+    }
+
+    public int searchCount(String jql)
+            throws IOException
+    {
+        return jira.searchCount(jql);
+    }
 }

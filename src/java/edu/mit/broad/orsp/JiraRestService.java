@@ -10,10 +10,7 @@ import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.lang.reflect.Type;
 
 import com.google.gson.Gson;
@@ -247,5 +244,40 @@ public class JiraRestService {
         }
 
         return key;
+    }
+
+    public List<Map<String, Object>> issueSearch(String jql, int max, int offset)
+            throws IOException
+    {
+        Map<String, Object> map = issueSearchMeta(jql, max, offset);
+        @SuppressWarnings("unchecked")
+        List<Map<String, Object>> listResult
+                = (List<Map<String, Object>>) map.get("issues");
+
+        return listResult;
+    }
+
+    public Map<String, Object> issueSearchMeta(String jql, int max, int offset)
+            throws IOException
+    {
+        // eventually make this static?
+        String[] fields = {"key", "summary", "issuetype"};
+        Map<String, Object> query = new HashMap<>(4);
+        query.put("jql", jql);
+        query.put("fields", Arrays.asList(fields));
+        query.put("maxResults", max + "");
+        query.put("startAt", offset + "");
+
+        return doPost("search", null, query, "search");
+    }
+
+    public int searchCount(String jql)
+            throws IOException
+    {
+        Map<String, Object> result = issueSearchMeta(jql, 0, 0);
+        Double count = (Double) result.get("total");
+        long total = count.longValue();
+
+        return (int) total;
     }
 }

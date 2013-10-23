@@ -30,7 +30,7 @@
     </div>
 
     <div id="search">
-        <g:form action="list" controller="Issue">
+        <g:form action="list" controller="Search">
             Selective Search still to be implemented.
             %{--<g:render template="/common/text_field" model="${[field: 'key']}" />--}%
             <g:actionSubmit value="Search" action="list" />
