@@ -49,3 +49,7 @@ var orsp = {
         fcn();
     },
 };
+
+$(document).ready(function () {
+    $("#tabs").tabs();
+});

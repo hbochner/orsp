@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'orsp.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
         <g:javascript library="jquery" />
+        <g:javascript library="jquery-ui"/>
 		<g:layoutHead/>
 		<r:layoutResources />
 	</head>
