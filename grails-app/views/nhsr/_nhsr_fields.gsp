@@ -1,7 +1,7 @@
 <ol class="property-list">
     <g:render template="/base/text_field"
               model="${[field: 'key', label: 'Project', doEdit: false]}"/>
-    <g:render template="/base/text_field" model="${[field: 'summary', label: 'Summary']}"/>
+    <g:render template="/base/text_field" model="${[field: 'summary', label: 'Project Title']}"/>
     <g:render template="/base/user"
               model="${[field: 'respParty', label: 'Broad Responsible Party']}"/>
     <g:render template="/base/user"
@@ -16,6 +16,7 @@
         To ascertain whether a change in the project (e.g. new cohort, change in technology)
         affects a previous determination.
     </g:render>
+
     <g:render template="/base/select"
               model="${[issue: issue, field: 'funding', label: 'Funding Source',
                       child: 'fundingOther']}">
@@ -23,6 +24,7 @@
     </g:render>
     <g:render template="/base/text_field"
               model="${[field: 'fundingOther', label: 'Other Funding']}"/>
+
     <g:render template="/base/radio_group"
               model="${[field: 'research', label: 'Research?']}">
         Is the activity research (a systematic investigation designed to develop

@@ -1,8 +1,17 @@
 <ol class="property-list">
     <g:render template="/base/text_field" model="${[field: 'key', label: 'Project', doEdit: false]}"/>
 
-    <g:render template="/base/text_field" model="${[field: 'summary', label: 'Summary']}"/>
+    <g:render template="/base/text_field" model="${[field: 'summary', label: 'Project Title']}"/>
+    <g:render template="/base/text_field" model="${[field: 'protocol', label: 'Protocol #']}"/>
+    <g:render template="/base/textarea"
+              model="${[field: 'description', label: "Scientific Summary"]}"/>
+
     <g:render template="/base/user" model="${[field: 'pi', label: 'PI']}"/>
+    <g:render template="/base/select"
+              model="${[field: 'affiliation', label: 'PI Affiliation', child: 'affiliationOther']}"/>
+    <g:render template="/base/text_field"
+              model="${[field: 'affiliationOther', label: 'PI Other Affiliation']}"/>
+
     <g:render template="/base/text_field" model="${[field: 'pm-name', label: 'Project Manager']}"/>
 
     <g:render template="/base/select"
@@ -14,13 +23,8 @@
        If 'other', name of funding source.
     </g:render>
 
-        <g:render template="/base/select"
-              model="${[field: 'affiliation', label: 'PI Affiliation', child: 'affiliationOther']}"/>
-    <g:render template="/base/text_field"
-              model="${[field: 'affiliationOther', label: 'PI Other Affiliation']}"/>
-
     <g:render template="/base/select"
-              model="${[field: 'irb', label: 'IRB']}"/>
+              model="${[field: 'irb', label: 'Preferred IRB']}"/>
 
     <g:render template="/base/text_field"
               model="${[field: 'rationale', label: 'IRB rationale']}">
