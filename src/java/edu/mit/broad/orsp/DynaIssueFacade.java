@@ -15,12 +15,24 @@ import java.util.Properties;
  */
 public class DynaIssueFacade {
     static private Map<String, FieldDescription> fields;
-    static private Map<String, String> typeByKey = new HashMap<>();
+    static private Map<String, String> typeByKey  = new HashMap<>();
     static private Map<String, String> typeByName = new HashMap<>();
 
     private JiraIssueProxy proxy;
     private String         key;
-    private String         type, issueType;
+    private String         issueType;
+
+    public DynaIssueFacade() {
+    }
+
+    public DynaIssueFacade(String user, String password)
+            throws IOException
+    {
+        JiraRestService jira = new JiraRestService();
+        jira.setUserName(user);
+        jira.setPassword(password);
+        proxy = new JiraIssueProxy(jira);
+    }
 
     private void init()
             throws IOException
@@ -112,7 +124,6 @@ public class DynaIssueFacade {
     {
         init();
 
-        this.type = type;
         issueType = typeByKey.get(type);
         if (issueType == null) {
             throw new Error("unrecognized issue type key '" + type + "'");

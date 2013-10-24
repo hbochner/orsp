@@ -11,26 +11,20 @@ class BaseController {
         }
     }
 
-    def getType() {
-        throw new Error("sub-class must implement getType")
-    }
-
-    def index() { }
-
     def show() {
-        def issue = new DynaIssueFacade()
+        def issue = getIssue()
         issue.key = params.id
         [issue: issue]
     }
 
     def edit() {
-        def issue = new DynaIssueFacade()
+        def issue = getIssue()
         issue.key = params.id
         [issue: issue]
     }
 
     def update() {
-        def issue = new DynaIssueFacade()
+        def issue = getIssue()
         issue.key = params.id
         issue.setFields(params)
         issue.update()
@@ -38,15 +32,26 @@ class BaseController {
     }
 
     def create() {
-        def issue = new DynaIssueFacade()
+        def issue = getIssue()
         [issue: issue]
     }
 
     def add() {
-        def issue = new DynaIssueFacade();
+        def issue = getIssue();
         issue.setType(getType())
         issue.setFields(params);
         def key  = issue.add();
         redirect([action: "show", id: key]);
+    }
+
+    def getIssue() {
+        if (session.user) {
+            return new DynaIssueFacade(session.user.name, session.user.password)
+        }
+        return new DynaIssueFacade()
+    }
+
+    def getType() {
+        throw new Error("sub-class must implement getType")
     }
 }
