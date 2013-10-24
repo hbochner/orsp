@@ -48,7 +48,7 @@ grails.project.dependency.resolution = {
         build 'com.sun.jersey:jersey-project:1.8'
         build 'javax.ws.rs:jsr311-api:1.0'
         build 'com.google.code.gson:gson:2.2.4'
-        }
+    }
 
     plugins {
         runtime ":hibernate:$grailsVersion"

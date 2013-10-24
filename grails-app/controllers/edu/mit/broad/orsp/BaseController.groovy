@@ -1,6 +1,15 @@
 package edu.mit.broad.orsp
 
 class BaseController {
+    def openidService
+
+    def beforeInterceptor = {
+        if (! session.user) {
+            session.savedParams = params
+            redirect(controller: 'login', action: 'required')
+            return false
+        }
+    }
 
     def getType() {
         throw new Error("sub-class must implement getType")

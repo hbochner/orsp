@@ -50,7 +50,7 @@ public class JiraRestService {
         }
         Properties props = new Properties();
         props.load(in);
-        jiraUrl = props.getProperty("jira");
+        setJiraUrl(props.getProperty("jira"));
         userName = props.getProperty("user");
         password = props.getProperty("password");
         defaultProject = props.getProperty("project");
@@ -70,18 +70,17 @@ public class JiraRestService {
     }
 
     public void setJiraUrl(String jiraUrl) {
+        // ensure single slash at end
+        if (! jiraUrl.endsWith("/")) {
+            jiraUrl += "/";
+        }
         this.jiraUrl = jiraUrl;
+        baseUrl = null;         // force recalculate
     }
 
     public String getBaseUrl() {
         if (baseUrl == null) {
-            baseUrl = jiraUrl;
-            // only add slash if it isn't there, so that we're robust against
-            // variations in the properties
-            if (!jiraUrl.endsWith("/")) {
-                baseUrl += "/";
-            }
-            baseUrl += "rest/api/2/";
+            baseUrl = jiraUrl + "rest/api/2/";
         }
         return baseUrl;
     }
@@ -111,13 +110,16 @@ public class JiraRestService {
         return getJerseyClient().resource(url);
     }
 
+    /*
+     * set resource for JSON input and output
+     */
     public WebResource.Builder setJson(WebResource resource) {
         return resource.type(MediaType.APPLICATION_JSON_TYPE)
                        .accept(MediaType.APPLICATION_JSON_TYPE);
     }
 
     /*
-     * this version is set for JSON input and output
+     * agent for PUT or POST request
      */
     public WebResource.Builder putOrPoster(String method, String key) {
         return setJson(getter(method, key));
@@ -279,5 +281,23 @@ public class JiraRestService {
         long total = count.longValue();
 
         return (int) total;
+    }
+
+    public boolean validateUser(String userName, String password)
+    {
+        Map<String, String> args = new HashMap<>(2);
+        args.put("username", userName);
+        args.put("password", password);
+        Gson gson = new Gson();
+        String json = gson.toJson(args);
+
+        String url = jiraUrl + "rest/auth/1/session";
+        // bypass the authentication in the getJerseryClient method
+        Client client = Client.create();
+        ClientResponse cr = setJson(client.resource(url)).post(ClientResponse.class, json);
+        // the response contains a cookie that we could save for logout,
+        // but currently we'll just let the session time out ...
+
+        return cr.getStatus() < 300;
     }
 }

@@ -15,8 +15,6 @@
 </head>
 
 <body>
-<g:render template="/base/topNav" />
-
 <div id="edit-issue" class="content scaffold-show" role="main">
     <h1><g:message code="default.create.label" args="[entityName]"/></h1>
     <g:form>

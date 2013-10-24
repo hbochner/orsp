@@ -12,3 +12,23 @@
 .header {
     text-align: center;
 }
+
+.float-left {
+    float: left;
+}
+
+.float-clear {
+    clear: both;
+}
+
+.float-right {
+    float: right;
+}
+
+.nav li.float-right {
+    display: block;
+    float: right;
+    list-style-type: none;
+    margin-right: 0.5em;
+    padding: 0;
+}

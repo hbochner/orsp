@@ -1,9 +1,12 @@
 package edu.mit.broad.orsp
 
 class SearchController {
-
-    def index() {
-        render "not yet implemented"
+    def beforeInterceptor = {
+        if (! session.user) {
+            session.savedParams = params
+            redirect(controller: 'login', action: 'required')
+            return false
+        }
     }
 
     def list() {
