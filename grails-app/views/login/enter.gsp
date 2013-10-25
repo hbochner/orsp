@@ -8,11 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <meta name="layout" content="main">
+    <meta name="layout" content="noNav">
     <title>Login</title>
 </head>
 
 <body>
+<g:render template="/base/topNav" model="${[loggingIn: true]}"/>
 
 <div id="login-form" class="content scaffold-show" role="main">
     <g:if test="${flash.message}">

@@ -9,11 +9,12 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <meta name="layout" content="main">
+    <meta name="layout" content="noNav">
     <title>ORSP</title>
 </head>
 
 <body>
+<g:render template="/base/topNav" model="${[atHome: true]}"/>
 
 <div id="tabs">
     <ul>
@@ -31,8 +32,9 @@
 
     <div id="search">
         <g:form action="list" controller="Search">
-            Selective Search still to be implemented.
-            %{--<g:render template="/common/text_field" model="${[field: 'key']}" />--}%
+            <div>Entering search criteria has not been implemented yet;<br/>
+                The Search button will display all projects.
+            </div>
             <g:actionSubmit value="Search" action="list" />
         </g:form>
     </div>

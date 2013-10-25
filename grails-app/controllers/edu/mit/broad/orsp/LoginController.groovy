@@ -7,19 +7,18 @@ class LoginController {
     def required() {
         // need a better format for errors
         flash.message = "Login required"
-        render(view: 'enter', loggingIn: true)
+        render(view: 'enter')
     }
 
     def enter() {
-        // just default
-        [loggingIn: true]
+        // just use default view
     }
 
     def login() {
         def jira = new JiraRestService()
         if (! jira.validateUser(params.name, params.password)) {
             flash.message = "Login failed"
-            redirect([action: 'enter', loggingIn: true])
+            redirect(action: 'enter')
             return
         }
         session.user = [name: params.name, password: params.password]

@@ -17,21 +17,24 @@
         <div class="float-clear"/>
     </div>
 
-    <g:if test="${!loggingIn}">
-        <div class="nav">
-            <ul>
-                <li>
-                    <a class="home" href="${createLink(uri: '/')}">Home</a>
-                </li>
-                <li>
-                    <a class="list" href="${createLink(uri: '/')}#search">Search</a>
-                </li>
-                <li>
-                    <a class="create" href="${createLink(uri: '/')}#create">Create</a>
-                </li>
+    <div class="nav">
+        <ul>
+            <g:if test="${! atHome}">
+            <li>
+                <a class="home" href="${createLink(uri: '/')}">Home</a>
+            </li>
+            <li>
+                <a class="list" href="${createLink(uri: '/')}#search">Search</a>
+            </li>
+            <li>
+                <a class="create" href="${createLink(uri: '/')}#create">Create</a>
+            </li>
+            </g:if>
+            <g:if test="${!loggingIn}">
                 <login:isLoggedIn>
                     <li class="float-right">
-                        <g:link action="logout" controller="login">${session.user.name} Logout</g:link>
+                        <g:link action="logout"
+                                controller="login">${session.user.name} Logout</g:link>
                     </li>
                 </login:isLoggedIn>
                 <login:notLoggedIn>
@@ -39,8 +42,8 @@
                         <g:link action="enter" controller="login">Login</g:link>
                     </li>
                 </login:notLoggedIn>
-            </ul>
-        </div>
-    </g:if>
+            </g:if>
+        </ul>
+    </div>
 
 </div>
