@@ -1,4 +1,4 @@
-package edu.mit.broad.orsp
+package orsp
 
 class LoginTagLib {
     static namespace = "login"
