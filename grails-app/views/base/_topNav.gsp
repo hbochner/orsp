@@ -34,7 +34,7 @@
                 <login:isLoggedIn>
                     <li class="float-right">
                         <g:link action="logout"
-                                controller="login">${session.user.name} Logout</g:link>
+                                controller="login">${session.user?.name} Logout</g:link>
                     </li>
                 </login:isLoggedIn>
                 <login:notLoggedIn>
