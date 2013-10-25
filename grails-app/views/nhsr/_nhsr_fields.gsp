@@ -1,3 +1,4 @@
+<g:render template="/base/project">
 <ol class="property-list">
     <g:render template="/base/text_field"
               model="${[field: 'key', label: 'Project', doEdit: false]}"/>
@@ -74,3 +75,4 @@
         I attest that the information provided above is accurate and complete.
     </g:render>
 </ol>
+</g:render>
