@@ -29,7 +29,7 @@ class LoginController {
             return
         }
 
-        render(view: "/index.gsp")
+        redirect(uri: "/")
     }
 
     def logout() {
