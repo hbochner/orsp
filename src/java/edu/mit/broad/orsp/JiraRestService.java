@@ -175,6 +175,8 @@ public class JiraRestService {
 
         Map<String, Object> data = doGet(resource, "get field descriptions");
         Map<String, Object> result = new HashMap<>();
+        // temporary? kludge
+        //result.put("comment", Utils.mapContainer("name", "comment"));
 
         @SuppressWarnings("unchecked")
         List<Map<String, Object>> types
