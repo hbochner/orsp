@@ -1,3 +1,10 @@
+<div id="tabs">
+    <ul>
+        <li><a href="#details">Details</a> </li>
+        <li><a href="#comments">Comments</a> </li>
+    </ul>
+
+<div id="details">
 <ol class="property-list">
     <g:render template="/base/text_field" model="${[field: 'key', label: 'Project', doEdit: false]}"/>
 
@@ -39,3 +46,20 @@
         If data will be submitted to dbGAP, is Broad responsible for this submission?
     </g:render>
 </ol>
+</div>
+
+<div id="comments">
+    <g:if test="${issue?.comment?.comments}">
+        <g:each in="${issue?.comment?.comments}" var="cmt">
+            <div>
+                <div>
+                    Created: ${cmt.created} by ${cmt.author.displayName}
+                </div>
+                <div>
+                    ${cmt.body}
+                </div>
+            </div>
+        </g:each>
+    </g:if>
+</div>
+</div>
