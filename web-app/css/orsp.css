@@ -32,3 +32,19 @@
     margin-right: 0.5em;
     padding: 0;
 }
+
+.project-header {
+    /*margin-left:auto;*/
+    /*margin-right:auto;*/
+}
+
+.project-key {
+    font-size: 18pt;
+    font-weight: bold;
+    padding-right: 1em;
+}
+
+.project-title {
+    font-size: 18pt;
+    font-style: italic;
+}
