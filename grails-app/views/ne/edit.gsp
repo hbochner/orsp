@@ -21,11 +21,7 @@
         <g:hiddenField name="id" value="${issue?.key}"/>
         <g:render template="ne_fields" model="${[doEdit: true]}"/>
 
-        <fieldset class="buttons">
-            <g:actionSubmit class="save" action="update"
-                            value="${message(code: 'default.button.update.label', default: 'Update')}"/>
-            <g:actionSubmit class="cancel" action="show" value="Cancel"/>
-        </fieldset>
+        <g:render template="/base/editButtons" />
     </g:form>
 </div>
 </body>
