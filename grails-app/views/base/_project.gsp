@@ -25,19 +25,18 @@
     <div id="comments">
         <g:if test="${issue?.comment?.comments}">
             <g:each in="${issue?.comment?.comments}" var="cmt">
-                <div>
-                    <div>
-                        Created: ${cmt.created?.substring(0, 10)} by ${cmt.author?.displayName}
+                <div class="item">
+                    <div class="author">
+                        Added: ${cmt.created?.substring(0, 10)} by ${cmt.author?.displayName}
                     </div>
-
-                    <div>
+                    <div class="comment">
                         ${cmt.body}
                     </div>
                 </div>
             </g:each>
         </g:if>
         <g:else>
-            There are not yet any comments on this project
+            <div class="item">There are not yet any comments on this project</div>
         </g:else>
         <div>
             <div>Add a comment</div>

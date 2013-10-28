@@ -48,3 +48,12 @@
     font-size: 18pt;
     font-style: italic;
 }
+
+#comments .item {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#comments .author {
+    border-bottom: solid green 1px;
+}
