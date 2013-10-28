@@ -217,4 +217,10 @@ public class JiraIssueProxy {
     {
         return jira.searchCount(jql);
     }
+
+    public void addComment(String comment)
+            throws IOException
+    {
+        jira.addComment(key, comment);
+    }
 }

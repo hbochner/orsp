@@ -302,4 +302,11 @@ public class JiraRestService {
 
         return cr.getStatus() < 300;
     }
+
+    public void addComment(String key, String comment)
+            throws IOException
+    {
+        Map<String, Object> data = Utils.mapContainer("body", comment);
+        doPost("issue", key + "/comment", data, "add comment");
+    }
 }

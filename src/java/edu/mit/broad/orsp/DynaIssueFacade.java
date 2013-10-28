@@ -183,6 +183,13 @@ public class DynaIssueFacade {
         return key;
     }
 
+    public void addComment(String comment)
+            throws IOException
+    {
+        init();
+        proxy.addComment(comment);
+    }
+
     class FieldDescription {
         // jira fieldid
         String                    id;

@@ -39,6 +39,16 @@
         <g:else>
             There are not yet any comments on this project
         </g:else>
+        <div>
+            <div>Add a comment</div>
+            <g:form action="addComment">
+                <g:hiddenField name="id" value="${issue?.key}"/>
+                <g:textArea name="comment" />
+                <div>
+                    <g:submitButton name="Add"/>
+                </div>
+            </g:form>
+        </div>
     </div>
 
     <div id="attachments">

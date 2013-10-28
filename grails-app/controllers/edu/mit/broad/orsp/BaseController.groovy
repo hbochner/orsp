@@ -42,6 +42,13 @@ class BaseController {
         redirect([action: "show", id: key]);
     }
 
+    def addComment() {
+        def issue = getIssue()
+        issue.key = params.id
+        issue.addComment(params.comment)
+        redirect([action: "show", id: params.id, fragment: "comments"]);
+    }
+
     def getIssue() {
         if (session.user) {
             return new DynaIssueFacade(session.user.name, session.user.password)
