@@ -1,8 +1,4 @@
 <g:render template="/base/project">
-<ol class="property-list">
-    <g:render template="/base/text_field"
-              model="${[field: 'key', label: 'Project', doEdit: false]}"/>
-    <g:render template="/base/text_field" model="${[field: 'summary', label: 'Project Title']}"/>
     <g:render template="/base/user"
               model="${[field: 'respParty', label: 'Broad Responsible Party']}"/>
     <g:render template="/base/user"
@@ -74,5 +70,4 @@
               model="${[field: 'accurate', label: 'Accurate?']}">
         I attest that the information provided above is accurate and complete.
     </g:render>
-</ol>
 </g:render>

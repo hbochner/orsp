@@ -1,3 +1,10 @@
+<g:if test="${! doCreate}">
+<div class="project-header">
+    <span class="project-key">${issue?.key}:</span>
+    <span class="project-title">${issue?.summary}</span>
+</div>
+</g:if>
+
 <div id="tabs">
     <ul>
         <li><a href="#details">Details</a></li>
@@ -6,7 +13,13 @@
     </ul>
 
     <div id="details">
-        ${body()}
+        <ol class="property-list">
+            <g:if test="${doEdit}">
+                <g:render template="/base/text_field"
+                          model="${[field: 'summary', label: 'Project Title']}"/>
+            </g:if>
+            ${body()}
+        </ol>
     </div>
 
     <div id="comments">

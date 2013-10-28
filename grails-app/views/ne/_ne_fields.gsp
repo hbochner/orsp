@@ -1,9 +1,4 @@
 <g:render template="/base/project">
-<ol class="property-list">
-    <g:render template="/base/text_field"
-              model="${[field: 'key', label: 'Project', doEdit: false]}"/>
-
-    <g:render template="/base/text_field" model="${[field: 'summary', label: 'Project Title']}"/>
     <g:render template="/base/user" model="${[field: 'pi', label: 'PI']}"/>
 
     <g:render template="/base/select"
@@ -41,5 +36,4 @@
     </g:render>
     %{--<g:render template="/base/date_field"--}%
               %{--model="${[field: 'expiration', label: 'Expiration Date']}"/>--}%
-</ol>
 </g:render>
