@@ -17,12 +17,7 @@
 <body>
 <div id="edit-issue" class="content scaffold-show" role="main">
     <h1><g:message code="default.edit.label" args="[entityName]"/></h1>
-    <g:form>
-        <g:hiddenField name="id" value="${issue?.key}"/>
-        <g:render template="ne_fields" model="${[doEdit: true]}"/>
-
-        <g:render template="/base/editButtons" />
-    </g:form>
+    <g:render template="ne_fields" model="${[doEdit: true]}"/>
 </div>
 </body>
 </html>

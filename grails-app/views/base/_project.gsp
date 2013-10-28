@@ -1,8 +1,8 @@
-<g:if test="${! doCreate}">
-<div class="project-header">
-    <span class="project-key">${issue?.key}:</span>
-    <span class="project-title">${issue?.summary}</span>
-</div>
+<g:if test="${!doCreate}">
+    <div class="project-header">
+        <span class="project-key">${issue?.key}:</span>
+        <span class="project-title">${issue?.summary}</span>
+    </div>
 </g:if>
 
 <div id="tabs">
@@ -18,9 +18,15 @@
                 <g:render template="/base/text_field"
                           model="${[field: 'summary', label: 'Project Title']}"/>
             </g:if>
-            ${body()}
-            <g:render template="/base/date_field"
-                      model="${[field: 'expiration', label: 'Expiration Date']}"/>
+            <g:form>
+                ${body()}
+            %{--<g:render template="/base/date_field"--}%
+            %{--model="${[field: 'expiration', label: 'Expiration Date']}"/>--}%
+                <g:if test="${doEdit}">
+                    <g:hiddenField name="id" value="${issue?.key}"/>
+                    <g:render template="/base/editButtons"/>
+                </g:if>
+            </g:form>
         </ol>
     </div>
 
@@ -31,6 +37,7 @@
                     <div class="author">
                         Added: ${cmt.created?.substring(0, 10)} by ${cmt.author?.displayName}
                     </div>
+
                     <div class="comment">
                         ${cmt.body}
                     </div>
@@ -44,7 +51,7 @@
             <div>Add a comment</div>
             <g:form action="addComment">
                 <g:hiddenField name="id" value="${issue?.key}"/>
-                <g:textArea name="comment" />
+                <g:textArea name="comment"/>
                 <div>
                     <g:submitButton name="Add"/>
                 </div>
