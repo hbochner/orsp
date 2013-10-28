@@ -142,6 +142,9 @@ public class JiraIssueProxy {
     }
 
     private static boolean singleChanged(Object a, Object b) {
+        if (a == null && "".equals(b)) {
+            return false;
+        }
         if (a != null) {
             return ! a.equals(b);
         }

@@ -20,8 +20,8 @@
             </g:if>
             <g:form>
                 ${body()}
-            %{--<g:render template="/base/date_field"--}%
-            %{--model="${[field: 'expiration', label: 'Expiration Date']}"/>--}%
+                <g:render template="/base/date_field"
+                          model="${[field: 'expiration', label: 'Expiration Date']}"/>
                 <g:if test="${doEdit}">
                     <g:hiddenField name="id" value="${issue?.key}"/>
                     <g:render template="/base/editButtons"/>
