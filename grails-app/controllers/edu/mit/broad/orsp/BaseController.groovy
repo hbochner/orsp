@@ -1,8 +1,6 @@
 package edu.mit.broad.orsp
 
 class BaseController {
-    def openidService
-
     def beforeInterceptor = {
         if (! session.user) {
             session.savedParams = params
