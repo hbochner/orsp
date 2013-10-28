@@ -19,6 +19,8 @@
                           model="${[field: 'summary', label: 'Project Title']}"/>
             </g:if>
             ${body()}
+            <g:render template="/base/date_field"
+                      model="${[field: 'expiration', label: 'Expiration Date']}"/>
         </ol>
     </div>
 

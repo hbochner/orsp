@@ -34,6 +34,4 @@
               model="${[field: 'accurate', label: 'Accurate?']}">
         I attest that the information provided above is accurate and complete.
     </g:render>
-    %{--<g:render template="/base/date_field"--}%
-              %{--model="${[field: 'expiration', label: 'Expiration Date']}"/>--}%
 </g:render>
