@@ -52,4 +52,53 @@ var orsp = {
 
 $(document).ready(function () {
     $("#tabs").tabs();
+    //$("#attachments .drag-target").each(function (x) {
+    //    alert("droppable");
+    //});
+    //$("#attachments .drag-target").droppable({
+    //   hoverClass: "active",
+    //   drop: function (e, ui) {
+    //       alert("something dropped");
+    //   }
+    //});
+    var atCount = 0;
+    $("#attachments .drag-target").on({
+       "dragenter": function (e) {
+           e.preventDefault();
+           e.stopPropagation();
+           $(this).addClass("active");
+       },
+        "dragleave": function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).removeClass("active");
+        },
+        "dragover": function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        },
+        "drop": function (evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
+            $(this).removeClass("active");
+            var files = evt.originalEvent.dataTransfer.files;
+            var form = $("#att-form").get(0);
+            var data = new FormData(form);
+            var rows = [];
+            for (var i=0; i < files.length; i++) {
+                data.append("files", files[i], files[i].name);
+                var row = $("<tr></tr>").append($("<td>" + files[i].name + "</td>"));
+                rows.push(row);
+            }
+            $.ajax({"url": "/orsp/irb/attach",
+                "type": "POST",
+                "data": data,
+                "processData": false,
+                "contentType": false,
+                success: function () {
+                    $("#attachments table").append(rows);
+                }
+            });
+        }
+    });
 });

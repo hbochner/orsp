@@ -77,14 +77,17 @@
             </table>
         </g:if>
         <g:else>
+            <table></table>
             There are not yet any attachments to this project
         </g:else>
         <g:form action="attach" enctype="multipart/form-data" method="POST">
-            <g:hiddenField name="id" value="${issue?.key}" id="att-key"/>
-            <input type="file" name="files" multiple="multiple" id="files"/>
-            <div class="drag-target">Drag a file here to attach it</div>
+            <g:hiddenField name="id" value="${issue?.key}"/>
+            <input type="file" name="files" multiple="multiple"/>
             <g:submitButton name="Upload" />
-            <div id="file-list"></div>
         </g:form>
+        <form enctype="multipart/form-data" method="POST" id="att-form">
+            <g:hiddenField name="id" value="${issue?.key}"/>
+            <div class="drag-target">Drag a file here to attach it</div>
+        </form>
     </div>
 </div>

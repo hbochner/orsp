@@ -208,6 +208,9 @@ public class DynaIssueFacade {
         String tempDir = System.getProperty("java.io.tmpdir");
         for (MultipartFile file: files) {
             String name = file.getOriginalFilename();
+            if (name == null || "".equals(name)) {
+                continue;
+            }
             if (name.indexOf("/") >= 0) {
                 name = name.replace("/", "%2F");
             }

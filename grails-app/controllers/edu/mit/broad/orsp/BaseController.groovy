@@ -54,7 +54,7 @@ class BaseController {
         issue.key = params.id
         def files = request.getMultiFileMap().files
         issue.addAttachments(files)
-        render "what now?"
+        redirect([action: "show", id: params.id, fragment: "attachments"]);
     }
 
     def getIssue() {
