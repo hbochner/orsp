@@ -77,6 +77,8 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.codehaus.jettison/jettison/bundles/jettison-1.1.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/com.sun.jersey/jersey-json/bundles/jersey-json-1.6.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/com.sun.jersey/jersey-client/bundles/jersey-client-1.6.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jvnet/mimepull/jars/mimepull-1.4.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/com.sun.jersey.contribs/jersey-multipart/jars/jersey-multipart-1.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

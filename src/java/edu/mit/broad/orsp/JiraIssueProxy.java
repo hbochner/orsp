@@ -1,5 +1,6 @@
 package edu.mit.broad.orsp;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -225,5 +226,11 @@ public class JiraIssueProxy {
             throws IOException
     {
         jira.addComment(key, comment);
+    }
+
+    public void addAttachment(File file, String mediaType)
+            throws IOException
+    {
+        jira.addAttachment(key, file, mediaType);
     }
 }

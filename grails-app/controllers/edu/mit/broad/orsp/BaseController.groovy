@@ -49,6 +49,14 @@ class BaseController {
         redirect([action: "show", id: params.id, fragment: "comments"]);
     }
 
+    def attach() {
+        def issue = getIssue()
+        issue.key = params.id
+        def files = request.getMultiFileMap().files
+        issue.addAttachments(files)
+        render "what now?"
+    }
+
     def getIssue() {
         if (session.user) {
             return new DynaIssueFacade(session.user.name, session.user.password)

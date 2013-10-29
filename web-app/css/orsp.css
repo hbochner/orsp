@@ -57,3 +57,14 @@
 #comments .author {
     border-bottom: solid green 1px;
 }
+
+#attachments .drag-target {
+    height: 60px;
+    width:  200px;
+    border: black dashed 2px;
+    border-radius: 10px;
+    padding: 5px;
+}
+#attachments .active {
+    background: lightblue;
+}

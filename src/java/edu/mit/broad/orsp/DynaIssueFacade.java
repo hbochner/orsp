@@ -1,5 +1,8 @@
 package edu.mit.broad.orsp;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -188,6 +191,34 @@ public class DynaIssueFacade {
     {
         init();
         proxy.addComment(comment);
+    }
+
+    public void addAttachment(File file, String mediaType)
+            throws IOException
+    {
+        init();
+        proxy.addAttachment(file, mediaType);
+    }
+
+    public void addAttachments(List<MultipartFile> files)
+            throws IOException
+    {
+        init();
+
+        String tempDir = System.getProperty("java.io.tmpdir");
+        for (MultipartFile file: files) {
+            String name = file.getOriginalFilename();
+            if (name.indexOf("/") >= 0) {
+                name = name.replace("/", "%2F");
+            }
+            File tmp = new File(tempDir, name);
+            file.transferTo(tmp);
+            try {
+                proxy.addAttachment(tmp, file.getContentType());
+            } finally {
+                tmp.delete();
+            }
+        }
     }
 
     class FieldDescription {

@@ -3,10 +3,13 @@ package edu.mit.broad.orsp;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+import com.sun.jersey.multipart.FormDataMultiPart;
 
 import javax.ws.rs.core.MediaType;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -15,6 +18,9 @@ import java.lang.reflect.Type;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.*;
+import com.sun.jersey.multipart.MultiPartMediaTypes;
+import com.sun.jersey.multipart.file.FileDataBodyPart;
+import com.sun.jersey.multipart.impl.MultiPartWriter;
 
 /**
  * Created with IntelliJ IDEA.
@@ -308,5 +314,31 @@ public class JiraRestService {
     {
         Map<String, Object> data = Utils.mapContainer("body", comment);
         doPost("issue", key + "/comment", data, "add comment");
+    }
+
+    public void addAttachment(String key, File file, String mediaType)
+            throws IOException
+    {
+        ClientConfig clientConfig = new DefaultClientConfig();
+        clientConfig.getClasses().add(MultiPartWriter.class);
+        Client client = Client.create(clientConfig);
+        client.addFilter(new HTTPBasicAuthFilter(userName, password));
+
+        WebResource resource = client.resource(getBaseUrl() + "issue/" + key + "/attachments");
+        WebResource.Builder builder = setJson(resource).type(MultiPartMediaTypes.createFormData());
+        builder = builder.header("X-Atlassian-Token", "nocheck");
+
+        FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
+        FileDataBodyPart bodyPart = new FileDataBodyPart("file", file, MediaType.valueOf(mediaType));
+        formDataMultiPart.bodyPart(bodyPart);
+        // N.B. API seems to support multiple uploads in one request, but we don't
+        // yet attempt to use that
+
+        ClientResponse cr = builder.post(ClientResponse.class, formDataMultiPart);
+        checkStatus(cr, "add attachment");
+
+        // the response contains info about the attachment; the ID could be extracted from that
+        // but it's messy, so leaving that until it's clear we need it
+
     }
 }

@@ -79,5 +79,12 @@
         <g:else>
             There are not yet any attachments to this project
         </g:else>
+        <g:form action="attach" enctype="multipart/form-data" method="POST">
+            <g:hiddenField name="id" value="${issue?.key}" id="att-key"/>
+            <input type="file" name="files" multiple="multiple" id="files"/>
+            <div class="drag-target">Drag a file here to attach it</div>
+            <g:submitButton name="Upload" />
+            <div id="file-list"></div>
+        </g:form>
     </div>
 </div>
