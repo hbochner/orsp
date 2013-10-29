@@ -46,6 +46,7 @@ grails.project.dependency.resolution = {
         runtime 'com.sun.jersey:jersey-json:1.6'
         runtime 'com.sun.jersey:jersey-core:1.14'
         runtime 'com.sun.jersey:jersey-project:1.8'
+        runtime 'com.sun.jersey.contribs:jersey-multipart:1.5'
         runtime 'javax.ws.rs:jsr311-api:1.0'
         runtime 'com.google.code.gson:gson:2.2.4'
     }
